@@ -27,3 +27,8 @@ study: What is spring
 chore: Rename an existing file
 refactor: What is spring
 ````
+
+## 📑주제
+|주차|주제|문제|
+|:---|:---|:---|
+|1주차|그리디(Greedy)|BOJ7570, BOJ14247, BOJ14754, BOJ17615 
