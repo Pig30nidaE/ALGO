@@ -2,3 +2,8 @@
 
 #sanghyol
 .DS_Store
+a.out
+*.txt
+tempCodeRunnerFile.*
+*.dSYM
+.vscode/
