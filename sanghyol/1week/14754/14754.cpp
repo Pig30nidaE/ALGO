@@ -13,7 +13,7 @@ long long    cal_all_arr_sum(int **map, int** visited, int n, int m) {
         index.first = -1;
         index.second = -1;
         for (int j = 0;j < m;j++) {
-            sum += map[i][j];
+            sum += map[i][j]; // 먼저 모든 박스의 합을 구함.
             if (map[i][j] > max) {
                 max = map[i][j];
                 index.first = i;
@@ -22,7 +22,7 @@ long long    cal_all_arr_sum(int **map, int** visited, int n, int m) {
         }
         if (index.first != -1 && index.second != -1) {
             if (!visited[index.first][index.second]) {
-                to_sub += max;
+                to_sub += max; // 모든 피자박스의 합에서 Side의 각각 최대크기를 빼줌.
                 visited[index.first][index.second] = 1;
             }
         }
@@ -40,7 +40,7 @@ long long    cal_all_arr_sum(int **map, int** visited, int n, int m) {
         }
         if (index.first != -1 && index.second != -1) {
             if (!visited[index.first][index.second]) {
-                to_sub += max;
+                to_sub += max; // 여기서는 Front를 빼주는데 단, visited를 체크하며 이미 방문했던 곳은 빼지 않음.
                 visited[index.first][index.second] = 1;
             }
         }
