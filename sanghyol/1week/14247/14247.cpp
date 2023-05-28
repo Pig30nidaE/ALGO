@@ -27,12 +27,12 @@ int main(){
 	for (int i = 0;i < n;i++) {
 		cin >> A[i];
 	}
-	vector <pair<int, int>> A_vec(A.begin(), A.end());
-	sort(A_vec.begin(), A_vec.end(), cmp);
+	vector <pair<int, int>> A_vec(A.begin(), A.end()); // 길이가 증가하는 정보를 vector로 변환
+	sort(A_vec.begin(), A_vec.end(), cmp); // 증가하는 순위에 따라 정렬
 	long long cost = 0;
 	long long i = 0;
 	for (auto k:A_vec) {
-		cost += H[k.first] + (k.second * i);
+		cost += H[k.first] + (k.second * i); // 증가하는 순위 별로 더함
 		i++;
 	}
 	cout << cost;
