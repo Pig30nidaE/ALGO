@@ -1,7 +1,5 @@
 #include <iostream>
-#include <stdio.h>
 #include <map>
-#include <list>
 #include <vector>
 #include <iterator>
 #include <algorithm>
@@ -17,31 +15,24 @@ bool cmp(pair<int, int>& a, pair<int, int>& b) {
 }
 
 int main(){
-	map<int, int> increase_info;
+	map<int, int> A;
 	int	n;
 
-	scanf("%d", &n);
-	vector <int> HA[n];
+	cin >> n;
+	int	H[n];
 	int	temp;
 	for (int i = 0;i < n;i++) {
-		scanf("%d", &temp);
-		HA[i] = vector <int> {temp};
+		cin >> H[i];
 	}
 	for (int i = 0;i < n;i++) {
-		scanf("%d", &temp);
-		increase_info[i] = temp;
+		cin >> A[i];
 	}
-	for (int i = 0;i < n;i++) {
-		for (int j = 0;j < n;j++) {
-			HA[i].push_back(HA[i][j] + increase_info[i]);
-		}
-	}
-	vector <pair<int, int>> inc_info_vec(increase_info.begin(), increase_info.end());
-	sort(inc_info_vec.begin(), inc_info_vec.end(), cmp);
-	int cost = 0;
-	int	i = 0;
-	for (auto k:inc_info_vec) {
-		cost += HA[k.first][i];
+	vector <pair<int, int>> A_vec(A.begin(), A.end());
+	sort(A_vec.begin(), A_vec.end(), cmp);
+	long long cost = 0;
+	long long i = 0;
+	for (auto k:A_vec) {
+		cost += H[k.first] + (k.second * i);
 		i++;
 	}
 	cout << cost;
