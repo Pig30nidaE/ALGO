@@ -4,6 +4,8 @@
 using namespace std;
 
 int main () {
+    ios_base::sync_with_stdio(false);
+	cin.tie(NULL); cout.tie(NULL);
     int N;
     string ball;
     int acnt = 0, bcnt = 0, ccnt = 0, dcnt = 0;
@@ -12,7 +14,6 @@ int main () {
     cin >> ball;
     
     for (int i = N - 1; i >= 0; i--) {
-
         int pos = 0;
         if (ball[i] == 'R'){
             if (i >= 1 && (ball.substr(0, i)).find("B", pos) != string::npos) {
