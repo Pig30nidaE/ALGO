@@ -31,4 +31,5 @@ refactor: What is spring
 ## 📑주제
 |주차|주제|문제|
 |:---|:---|:---|
-|1주차|그리디(Greedy)|BOJ2109, BOJ14247, BOJ14754, BOJ17615 
+|1주차|그리디(Greedy)|BOJ.2109, BOJ.14247, BOJ.14754, BOJ.17615|
+|2주차|너비우선탐색(BFS)|BOJ.1012, BOJ.1926 BOJ.2178 BOJ.7576|
