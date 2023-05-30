@@ -1,29 +1,35 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <queue>
 using namespace std;
+ 
+int n;
+priority_queue<int, vector<int>, greater<int>> pq;
+vector<pair<int, int>> v;
+int result;
 
-
-int main () {
-    vector <pair <int, int> > v;
-    int N;
-
-    cin >> N;
-    bool done[N];
-    for (int i = 0; i < N; i++) {
-        int D, P;
-        cin >> P >> D;
-        v.push_back(make_pair(P, D));
+int main() {
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        int p, d;
+        cin >> p >> d;
+        v.push_back(make_pair(d, p));
     }
+ 
     sort(v.begin(), v.end());
-    long sum = 0;
-    int day = 1;
-    for (int i = 0; i < N - 1; i++) {
-        if (v[i].second > day && !done[i]) {
-            sum += v[i].first;
-            done[i] = true;
-            day++;
+ 
+    for (int i = 0; i < n; i++) {
+        pq.push(v[i].second);
+        result += v[i].second;
+ 
+        if (pq.size() > v[i].first) {
+            result -= pq.top();
+            pq.pop();
         }
     }
-    cout << sum;
+    
+    cout << result;
+ 
+    return 0;
 }
