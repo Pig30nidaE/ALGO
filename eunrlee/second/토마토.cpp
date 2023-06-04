@@ -24,16 +24,24 @@ void bfs() {
             if (arr[ny][nx] == -1) 
                 continue;
             else if (nx >= 0 && ny >= 0 && nx < M && ny < N && arr[ny][nx] == 0) {
-                cnt[ny][nx] = cnt[y][x] + 1;
-                arr[ny][nx] = 1;
+                arr[ny][nx] = arr[y][x] + 1;
+                // arr[ny][nx] = 1;
                 q.push(make_pair(ny, nx));
             }
         }
+        // for (int i = 0; i < N; i++) {
+        //     for (int j = 0; j< M; j++) {
+        //         cout << arr[i][j] << " ";
+        //     }
+        //     cout << "\n";
+        // }
+        //     cout << "\n";
+        //     cout << "\n";
     }
 }
 
 int main () {
-    cin >> N >> M;
+    cin >> M >> N;
 
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < M; j++) {
@@ -56,8 +64,8 @@ int main () {
                 cout << -1;
                 return 0;
             }
-            if (maxcnt < cnt[i][j]) {
-                maxcnt = cnt[i][j];
+            if (maxcnt < arr[i][j]) {
+                maxcnt = arr[i][j] - 1;
             }
         }
     }
