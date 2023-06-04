@@ -1,8 +1,6 @@
 {
-	"files.associations": {
-		"utility": "cpp",
-		"queue": "cpp",
-		"iostream": "cpp"
-	},
-	"cph.general.onceMaintainerMessage": false
+    "cph.general.onceMaintainerMessage": false,
+    "files.associations": {
+        "iostream": "cpp"
+    }
 }

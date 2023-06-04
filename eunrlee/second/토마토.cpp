@@ -9,6 +9,7 @@ int dx[4] = {1, 0, -1, 0};
 int dy[4] = {0, 1, 0, -1};
 int cnt[1001][1001] = { 1 };
 int maxcnt = 0;
+int zerocnt = 0;
 queue<pair<int, int> > q;
 
 void bfs() {
@@ -16,11 +17,13 @@ void bfs() {
         int y = q.front().first;
         int x = q.front().second;
         q.pop();
+        if (arr[y][x] == -1) continue;
         for (int i = 0; i < 4; i ++) {
             int nx = x + dx[i];
             int ny = y + dy[i];
-            if (arr[nx][ny] == -1) continue;
-            if (nx >= 0 && ny >= 0 && nx < M && ny < N && arr[ny][nx] == 0) {
+            if (arr[ny][nx] == -1) 
+                continue;
+            else if (nx >= 0 && ny >= 0 && nx < M && ny < N && arr[ny][nx] == 0) {
                 cnt[ny][nx] = cnt[y][x] + 1;
                 arr[ny][nx] = 1;
                 q.push(make_pair(ny, nx));
@@ -37,8 +40,14 @@ int main () {
             cin >> arr[i][j];
             if (arr[i][j] == 1) {
                 q.push(make_pair(i, j));
+            } else if (arr[i][j] == 0) {
+                zerocnt++;
             }
         }
+    }
+    if (!zerocnt) {
+        cout << 0;
+        return (0);
     }
     bfs();
     for (int i = 0; i < N; i++) {
@@ -52,8 +61,5 @@ int main () {
             }
         }
     }
-    if (maxcnt == 1)
-        cout << 0;
-    else
-        cout << maxcnt;
+    cout << maxcnt;
 }
