@@ -4,71 +4,75 @@
 #include <queue>
 
 using namespace std;
-int	finish_check(vector<vector<int> >arr)
+int	finish_check(int **arr, int arr_x_len, int arr_y_len)
 {
 	int n, m;
 
-	n = arr.size();
-	m = arr[0].size();
+	n = arr_y_len;
+	m = arr_x_len;
 
 	for (int i = 0; i < n; i++)
 	{
-		if (find(begin(arr[i]), end(arr[i]), 0) != end(arr[i]))
+		for(int j = 0; j < m; j++)
 		{
-			return (1);
+			if (arr[i][j] == 0)
+				return (1);
 		}
 	}
 	return (0);
 }
 
-void	go_bfs(vector<vector<int> > arr, int size, vector<pair<int, int> >vec, queue<pair<int, int> >bfs)
+int	go_bfs(int **arr, int arr_x_len, int arr_y_len, queue<pair<int, int> >bfs)
 {
+	int cnt = 0;
 	int queue_size;	
 	int x, y;
-	while (finish_check(arr))
+	while (finish_check(arr, arr_x_len, arr_y_len))
 	{
+		if (bfs.empty())
+			return (-1);
 		queue_size = bfs.size();
 		for(int i = 0; i < queue_size; i++)
 		{
-			if (bfs.empty())
-			{
-				printf("bfs.empty!\n");
-				return ;
-			}
-			else
-			{
-				bfs.push(make_pair(bfs.front().first + 1, bfs.front().second));
-				bfs.push(make_pair(bfs.front().first + -1, bfs.front().second));
-				bfs.push(make_pair(bfs.front().first, bfs.front().second + 1));
-				bfs.push(make_pair(bfs.front().first, bfs.front().second - 1));
-				bfs.pop();
-			}
+				y = bfs.front().first;
+				x = bfs.front().second;
+				if (((y + 1 < arr_y_len && y + 1 >= 0) && (x < arr_x_len && x >= 0)))
+				{
+					if (arr[y+1][x] == 0)
+					{
+					arr[y+1][x] = 1;
+					bfs.push(make_pair(y + 1, x));
+					}
+				}
+				if (((y - 1 < arr_y_len && y - 1 >= 0) && (x < arr_x_len && x >= 0)))
+				{
+					if (arr[y-1][x] == 0)
+					{
+					arr[y - 1][x] = 1;
+					bfs.push(make_pair(y - 1, x));
+					}
+				}
+				if (((y < arr_y_len && y >= 0) && (x + 1 < arr_x_len && x + 1 >= 0)))
+				{
+					if (arr[y][x+1] == 0)
+					{
+					arr[y][x + 1] = 1;
+					bfs.push(make_pair(y, x + 1));
+					}
+				}
+				if (((y < arr_y_len && y >= 0) && (x - 1 < arr_x_len && x - 1 >= 0)))
+				{
+					if (arr[y][x-1] == 0)
+					{
+					arr[y][x - 1] = 1;
+					bfs.push(make_pair(y, x - 1));
+					}
+				}
+			bfs.pop();
 		}
-		printf("hello\n");
-		queue_size = bfs.size();
-		for (int i = 0; i < queue_size; i++)
-		{
-			x = bfs.front().first;
-			y = bfs.front().second;
-			if ((x >= arr.size()) || (y >= arr[0].size()))
-			{
-				continue;
-			}
-			if (arr[x][y] != 0)
-				continue;
-			arr[x][y] = 1;
-		}
-		for (int i = 0; i < arr.size(); i++)
-		{
-			for (int j = 0; j < arr[0].size(); j++)
-			{
-				printf("%d ", arr[i][j]);
-			}
-			printf("\n");
-		}
-		printf("\n\n");
-
+		cnt ++;
 	}
+	return (cnt);
 }
 
 int main()
@@ -78,9 +82,11 @@ int main()
 
 	cin >> n >> m;
 
-	vector<vector<int> > arr(m, vector<int>(n, 0));
+	int **arr = (int **)malloc(sizeof(int *) * m);
+
 	for (int i = 0; i < m; i++)
 	{
+		arr[i] = (int *)malloc(sizeof(int) * n);
 		for (int j = 0; j < n; j++)
 		{
 			cin >> arr[i][j];
@@ -89,37 +95,21 @@ int main()
 		}
 	}
 
-	vector<pair<int, int> > vec;
+	queue<pair<int, int> >bfs;
 	for (int i = 0; i < m; i++)
 	{
 		for (int j = 0; j < n; j++)
 		{
 			if (arr[i][j] == 1)
 			{
-				vec.push_back(make_pair(i, j));
+		bfs.push(make_pair(i, j));
 			}
 		}
 	}
-	queue<pair<int, int> >bfs;
-	for (int i = 0; i < vec.size(); i++)
+	printf("%d\n", go_bfs(arr, n, m, bfs));
+	for (int i = 0; i < m; i++)
 	{
-		bfs.push(make_pair(vec[i].first, vec[i].second));
+		free(arr[i]);
 	}
-	go_bfs(arr, start_cnt, vec, bfs);
-
-
-	// tester
-	// for (int i = 0; i < vec.size(); i++)
-	// {
-	// 	bfs.push(make_pair(vec[i].first, vec[i].second));
-	// 	printf("%d,%d\n", bfs.front().first, bfs.front().second);
-	// 	bfs.pop();
-	// }
-	// printf("%ld\n", vec.size());
-
-	// for (int i = 0; i < vec.size(); i++)
-	// {
-	// 	cout << vec[i].first << vec[i].second;
-	// }
-	// printf("\n\n");
+	free(arr);
 }
