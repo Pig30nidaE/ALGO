@@ -78,4 +78,12 @@ int main() {
 	answer = circuit_arr(n, m);
 	cout << answer.first << '\n' << answer.second;
 
+	for (int i = 0;i < n;i++) {
+        delete[] drawingPaper[i];
+    }
+    for (int i = 0;i < n;i++) {
+        delete[] visited[i];
+    }
+    delete drawingPaper;
+    delete visited;
 }
