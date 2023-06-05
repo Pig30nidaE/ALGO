@@ -8,3 +8,4 @@ tempCodeRunnerFile.*
 *.dSYM
 .vscode/
 *.exe
+*.json
