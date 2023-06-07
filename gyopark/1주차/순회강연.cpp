@@ -24,9 +24,12 @@ int main()
         cin >> p >> d;
         v.push_back(make_pair(d, p)); //day 순으로 정렬하기 위해 d, p로 저장
     }
- 
+
     sort(v.begin(), v.end());
- 
+
+    // for (int i = 0; i < n; i++)
+    //     cout<<"first : "<< v[i].first<<" second : "<< v[i].second <<endl;
+
     for (int i = 0; i < n; i++) {
         pq.push(v[i].second);
         result += v[i].second;
@@ -40,3 +43,12 @@ int main()
     cout << result;
     return 0;
 }
+
+// 7
+// 2 1
+// 20 1
+// 8 2
+// 100 2
+// 10 3
+// 50 10
+// 5 20

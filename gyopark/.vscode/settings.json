@@ -14,6 +14,7 @@
         "vector": "cpp",
         "utility": "cpp",
         "ios": "cpp",
-        "queue": "cpp"
+        "queue": "cpp",
+        "ostream": "cpp"
     }
 }
