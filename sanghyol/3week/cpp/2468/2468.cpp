@@ -21,8 +21,6 @@ void	run_dfs(pair<int, int> loc, int prcpt, int n) {
 			run_dfs(posi, prcpt, n);
 		}
 	}
-
-
 }
 
 int	get_safety_area(int prcpt, int n) {
