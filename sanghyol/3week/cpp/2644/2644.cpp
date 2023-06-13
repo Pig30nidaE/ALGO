@@ -7,25 +7,34 @@ using namespace std;
 
 map <int, vector<int> > family;
 map <int, int> family_reverse;
+int flag = 0;
 
-int	run_dfs(int node, int target, int depth, vector<int> *path) {
-	map<int, vector<int> >::iterator parent_iter;
-	vector<int>::iterator child_iter;
-
-	parent_iter = family.find(node);
-	if (parent_iter != family.end()) {
-		(*path).insert((*path).begin(), parent_iter->first);
-		child_iter = parent_iter->second.begin();
-		for (child_iter = parent_iter->second.begin();child_iter != parent_iter->second.end();child_iter++) {
-			if (*child_iter == target)
-				return depth;
-			else 
-				return run_dfs(*child_iter, target, depth + 1, path);
-		}
-		return depth;
+void	run_dfs(int node, int target, vector<int> *path) {
+	map <int, vector <int> >::iterator parent_iter;
+	(*path).insert((*path).begin(), node);
+	if (node == target) {
+		flag = 1;
+		return ;
 	}
-	else
-		return depth;
+	parent_iter = family.find(node);
+	if (parent_iter == family.end())
+		return ;
+	vector <int>::iterator child_iter;
+	child_iter = parent_iter->second.begin();
+	for (child_iter = parent_iter->second.begin();
+		child_iter != parent_iter->second.end();child_iter++) {
+		run_dfs(*child_iter, target, path);
+		if (flag)
+			return ;
+		(*path).erase((*path).begin());
+	}
+	return ;
+}
+
+int	get_root_node(int target) {
+	while (family_reverse[target])
+		target = family_reverse[target];
+	return target;
 }
 
 int main() {
@@ -46,22 +55,22 @@ int main() {
 	vector <int> path2;
 	vector<int>::iterator path1_iter;
 	vector<int>::iterator path2_iter;
-	int answer1 = run_dfs(1, target1, 1, &path1);
-	int answer2 = run_dfs(1, target2, 1, &path2);
-	// path1_iter = path1.begin();
-	// path2_iter = path2.begin();
-	
-	int count = 0;
-	// while (*path1_iter == *path2_iter
-	// 	&& (path1_iter != path1.end() && path2_iter != path2.end())) {
-	// 		count++;
-	// 		path1_iter++;
-	// 		path2_iter++;
-	// }
-	while ((path1[count] && path2[count]) && path1[count] == path2[count])
-		count++;
-	if (!count)
+	int target1_root = get_root_node(target1);
+	int target2_root = get_root_node(target2);
+	if (target1_root != target2_root) {
 		cout << -1;
-	else
-		cout << answer1 + answer2 - count;
+		return 0;
+	}
+	run_dfs(target1_root, target1, &path1);
+	flag = 0;
+	run_dfs(target2_root, target2, &path2);
+	int count = 0;
+	path1_iter = path1.end() - 1;
+	path2_iter = path2.end() - 1;
+	while (*path1_iter && *path2_iter && *path1_iter == *path2_iter) {
+		count++;
+		path1_iter--;
+		path2_iter--;
+	}
+	cout << path1.size() + path2.size() - count * 2;
 }
