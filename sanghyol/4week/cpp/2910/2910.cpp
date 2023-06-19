@@ -1,12 +1,13 @@
 #include <vector>
 #include <set>
 #include <iterator>
+#include <algorithm>
 #include <iostream>
 using namespace std;
 
-int compare(vector<pair<pair<int ,int>, int> > info, int target1, int target2) {
-	vector<pair<pair<int ,int>, int> >::iterator iter1;
-	vector<pair<pair<int ,int>, int> >::iterator iter2;
+int compare(vector<pair<pair<long long ,int>, int> > info, int target1, int target2) {
+	vector<pair<pair<long long ,int>, int> >::iterator iter1;
+	vector<pair<pair<long long ,int>, int> >::iterator iter2;
 	for (iter1 = info.begin();iter1 != info.end();iter1++) {
 		if (iter1->first.first == target1)
 			break;
@@ -15,31 +16,26 @@ int compare(vector<pair<pair<int ,int>, int> > info, int target1, int target2) {
 		if (iter2->first.first == target2)
 			break;
 	}
-	if (iter1->first.first > iter2->first.first)
-		return -1;
-	if (iter1->first.first < iter2->first.first)
-		return 1;
 	if (iter1->first.second > iter2->first.second)
-		return 1;
+		return -1;
 	if (iter1->first.second < iter2->first.second)
+		return 1;
+	if (iter1->second > iter2->second)
+		return 1;
+	if (iter1->second < iter2->second)
 		return -1;
 	return 0;
 }
 
-vector<pair<pair<int ,int>, int> > insertion_sort(vector<pair<pair<int ,int>, int> > info) {
-	vector<pair<pair<int ,int>, int> >::iterator key_iter;
-	vector<pair<pair<int ,int>, int> >::iterator cmp_iter;
-	key_iter = info.begin();
-	key_iter++;
-	while (key_iter != info.end()) {
-		cmp_iter = key_iter;
-		cmp_iter--;
-		while (cmp_iter != info.begin()) {
-			if (compare(info, key_iter->first.first, cmp_iter->first.first))
-				swap(key_iter, cmp_iter);
-			cmp_iter--;
+vector<pair<pair<long long ,int>, int> > insertion_sort(vector<pair<pair<long long ,int>, int> > info) {
+	int size = info.size();
+	for (int key_index = 1;key_index < size;key_index++) {
+		for (int cmp_index = key_index - 1;cmp_index >= 0;cmp_index--) {
+			if (compare(info, info[cmp_index].first.first, info[key_index].first.first) >= 0) {
+				swap(info[key_index], info[cmp_index]);
+				key_index = cmp_index;
+			}
 		}
-		key_iter++;
 	}
 	return info;
 }
@@ -49,17 +45,18 @@ int main() {
     cin.tie(NULL); 
     cout.tie(NULL);
 
-	int n, c;
+	int n;
+	long long c;
 	cin >> n >> c;
 
 	if (n == 1) {
-		int temp;
+		long long temp;
 		cin >> temp;
 		cout << temp;
 		return 0;
 	}
-	vector<pair<pair<int ,int>, int> > info;
-	vector<pair<pair<int ,int>, int> >::iterator find_iter;
+	vector<pair<pair<long long ,int>, int> > info;
+	vector<pair<pair<long long ,int>, int> >::iterator find_iter;
 	int order = 0;
 	for (int i = 0;i < n;i++) {
 		int temp;
