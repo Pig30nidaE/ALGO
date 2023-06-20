@@ -63,7 +63,8 @@ int main()
 			order[tmp] = i+1;
 	}
 	
-	vector<pair<long, int> > v(dic.begin(), dic.end());
+	// vector<pair<long, int> > v(dic.begin(), dic.end());
+	vector<pair<long, int> > v(dic);
 	
 	int v_size = v.size(); 
 
