@@ -1,3 +1,5 @@
+#include <queue>
+#include <algorithm>
 #include <iostream>
 using namespace std;
 
@@ -11,22 +13,27 @@ pair <int, int> *heap;
 void heapify(int node, int n) {
     int left = LEFT(node);
     int right = RIGHT(node);
-    int target;
-    if (left < n && right >= n)
+    int target = node;
+    if (left < n && heap[left].second > heap[node].second)
         target = left;
-    else if (right < n && left >= n)
+    else if (right < n && heap[right].second > heap[node].second)
         target = right;
-    else if (left > n && right > n)
-        return ;
-    else {
-        if (heap[left].second > heap[right].second)
+    else if (left < n && right < n && heap[left].second == heap[right].second) {
+        if (heap[left].first < heap[right].first)
             target = left;
         else
             target = right;
     }
-    if (heap[target].second > heap[node].second) {
+    if (target != node) {
         swap(heap[target], heap[node]);
         heapify(target, n);
+    }
+}
+
+void heap_sort(int last_index) {
+    for (int i = last_index;i > 0;i--) {
+        swap(heap[ROOT], heap[i]);
+        heapify(ROOT, i - 1);
     }
 }
 
@@ -39,14 +46,20 @@ void seepage(int node) {
     }
 }
 
-void heap_sort(int last_index, int n) {
-    for (int i = last_index;i > 0;i--) {
-        swap(heap[ROOT], heap[last_index]);
-        heapify(ROOT, last_index - 1);
-        // seepage(last_index);
-    }
-}
+int get_result(int n) {
+    int remain;
 
+    remain = heap[n - 1].second;
+    for (int i = n - 1;i >= 0;i--) {
+        remain -= heap[i].first;
+        if (i > 0 && remain > heap[i - 1].second)
+            remain = heap[i - 1].second;
+    }
+    if (remain < 0)
+        return -1;
+    else
+        return remain;
+}
 
 int main() {
 	ios_base :: sync_with_stdio(false); 
@@ -62,7 +75,6 @@ int main() {
         heap[i] = make_pair(temp, temp2);
         seepage(i);
     }
-    heap_sort(n - 1, n);
-    for (int i = 0;i < n;i++)
-        cout << heap[i].second << endl;
+    heap_sort(n - 1);
+    cout << get_result(n);
 }
