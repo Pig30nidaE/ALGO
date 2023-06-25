@@ -1,5 +1,6 @@
 #include <iostream>
 #include <algorithm>
+#include <vector>
 
 using namespace std;
 
@@ -58,9 +59,29 @@ int main()
 
 	heapsort(&vec, n);
 
-	for (int i = 0; i < n + 1; i++)
+	int run_time = 0;
+	int finish_time = 0;
+	int free_time = 0;
+	int i = 0;
+	for (free_time = 0; free_time <= vec[1].first - vec[1].second; free_time++)
 	{
-		printf("%d:%d\n", vec[i].first, vec[i].second);
+		run_time = free_time;
+		for (i = 1; i < n + 1; i++)
+		{
+			run_time += vec[i].second;
+			finish_time = vec[i].first;
+			if (run_time > finish_time)
+			{
+				if (free_time == 0)
+				{
+					cout << "-1\n";
+					return 0;
+				}
+				break;
+			}
+		}
+		if (i != n + 1)
+			break;
 	}
-
+	cout << free_time - 1;
 }
