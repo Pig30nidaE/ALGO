@@ -28,87 +28,56 @@ int main()
 	int value;
 	int min = 'z';
 	int tmp2;
-	vector <pair <int, int > > vec;
+	vector <string> vec;
+	string word;
+	for (int i = 0; i < c; i++)
+	{
+		for (int j = 0; j < r; j++)
+		{
+			if (str[j][i] == '#')
+			{
+				if (word.length() > 1)
+				{
+					vec.push_back(word);
+				}
+				word.clear();
+			}
+			else
+			{
+				word.push_back(str[j][i]);
+			}
+		}
+		if (word.length() > 1)
+		{
+			vec.push_back(word);
+		}
+		word.clear();
+	}
 	for (int i = 0; i < r; i++)
 	{
-		if (i == 0 || i ==  r - 1)
+		for (int j = 0; j < c; j++)
 		{
-			for (int j = 0; j < c; j++)
+			if (str[i][j] == '#')
 			{
-				tmp2 = (int)str[i][j];
-				if (tmp2 == '#')
-					continue;
-				if (min >= tmp2)
+				if (word.length() > 1)
 				{
-					if (min == tmp2)
-					{
-						vec.push_back(make_pair(i, j));
-						continue;
-					}
-					min = tmp2;
-					vec.clear();
-					vec.push_back(make_pair(i, j));
+					vec.push_back(word);
 				}
+				word.clear();
+			}
+			else
+			{
+				word.push_back(str[i][j]);
 			}
 		}
-		else
+		if (word.length() > 1)
 		{
-			tmp2 = (int)str[i][0];
-			if (tmp2 == '#')
-				continue;
-			if (min >= tmp2)
-			{
-				if (min == tmp2)
-				{
-					vec.push_back(make_pair(i, 0));
-				}
-				else
-				{
-					min = tmp2;
-					vec.clear();
-					vec.push_back(make_pair(i, 0));
-				}
-			}
-			tmp2 = (int)str[i][c-1];
-			if (tmp2 == '#')
-				continue;
-			if (min >= tmp2)
-			{
-				if (min == tmp2)
-				{
-					vec.push_back(make_pair(i, c-1));
-				}
-				else
-				{
-					min = tmp2;
-					vec.clear();
-					vec.push_back(make_pair(i, c-1));
-				}
-			}
+			vec.push_back(word);
 		}
+		word.clear();
 	}
-
-	int x=-1, y=-1;
-	for (vector <pair<int, int> >::iterator i = vec.begin(); i != vec.end(); i++)
-	{
-		x = i->second;
-		y = i->first;
-		if ((y == 0 && x == 0) || (y == r-1 && x == 0) || (y == 0 && x == c-1) || (y == r-1 && x == c-1))
-		{
+	sort(vec.begin(), vec.end());
 
 
-		}
-		else
-		{
-
-		}
-		
-		printf("%d, %d\n", i->first, i->second);
-	}
-
-	for (int i = 0; i < r; i++)
-	{
-		cout << str[i][0] << "\n";
-	}
-	delete [] str;
+	cout << vec[0] << "\n";
 }
