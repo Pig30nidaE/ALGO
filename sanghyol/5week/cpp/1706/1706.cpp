@@ -2,11 +2,10 @@
 #include <sstream>
 #include <algorithm>
 #include <iterator>
+#include <string>
 #include <iostream>
 using namespace std;
 
-string *crossword;
-string *rot_crossword;
 const std::string WHITESPACE = " \n\r\t\f\v";
 
 void	quick_sort(vector <string>::iterator start, vector <string>::iterator end) {
@@ -70,45 +69,35 @@ int main() {
     int r, c;
 
     cin >> r >> c;
-    crossword = new string[r];
+    cin.ignore();
+    string crossword[r];
     for (int i = 0;i < r;i++)
-        cin >> crossword[i];
-    rot_crossword = new string[c];
+        getline(cin, crossword[i]);
+    string rot_crossword[c];
     for (int i = 0;i < c;i++) {
         for (int j = 0;j < r;j++)
-            crossword[i][j] = rot_crossword[j][i];
+            rot_crossword[i].push_back(crossword[j][i]);
     }
-    cout << endl;
-    cout << endl;
-    string::iterator iter3;
-    for (iter3 = rot_crossword->begin();iter3 != rot_crossword->end();iter3++)
-        cout << *iter3 << endl;
-    cout << endl;
-    cout << endl;
-    cout << endl;
     vector <string> word_set;
     vector <string> temp;
     for (int i = 0;i < r;i++) {
         temp = split(crossword[i], '#');
         word_set.insert(word_set.end(), temp.begin(), temp.end());
     }
-    // for (int i = 0;i < word_set.size();i++)
-    //     cout << word_set[i] << endl;
-    // cout << "-----------" << endl;
     for (int i = 0;i < c;i++) {
         temp = split(rot_crossword[i], '#');
         word_set.insert(word_set.end(), temp.begin(), temp.end());
     }
-    // for (int i = 0;i < word_set.size();i++)
-    //     cout << word_set[i] << endl;
-    // cout << "-----------" << endl;
     vector <string>::iterator iter;
     vector <string>::iterator iter2;
     iter = word_set.begin();
     iter2 = word_set.end();
     iter2--;
-    // for (int i = 0;i < word_set.size();i++)
-    //     cout << word_set[i] << endl;
     quick_sort(iter, iter2);
-    // cout << word_set.begin();
+    for (int i = 0;i < word_set.size();i++) {
+        if (word_set[i].length() > 1) {
+            cout << word_set[i];
+            return 0;
+        }
+    }
 }
