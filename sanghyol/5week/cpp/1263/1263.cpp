@@ -1,4 +1,3 @@
-#include <queue>
 #include <algorithm>
 #include <iostream>
 using namespace std;
@@ -13,20 +12,17 @@ pair <int, int> *heap;
 void heapify(int node, int n) {
     int left = LEFT(node);
     int right = RIGHT(node);
-    int target = node;
-    if (left < n && heap[left].second > heap[node].second)
-        target = left;
-    else if (right < n && heap[right].second > heap[node].second)
-        target = right;
-    else if (left < n && right < n && heap[left].second == heap[right].second) {
-        if (heap[left].first < heap[right].first)
-            target = left;
-        else
-            target = right;
-    }
-    if (target != node) {
-        swap(heap[target], heap[node]);
-        heapify(target, n);
+    if (left <= n) {
+        if (right <= n && heap[left].second < heap[right].second)
+            left = right;
+        if (right <= n && heap[left].second == heap[right].second) {
+            if (heap[left].first < heap[right].first)
+                left = right;
+        }
+        if (heap[node].second < heap[left].second) {
+            swap(heap[node], heap[left]);
+            heapify(left, n);
+        }
     }
 }
 
@@ -77,4 +73,5 @@ int main() {
     }
     heap_sort(n - 1);
     cout << get_result(n);
+    delete heap;
 }
