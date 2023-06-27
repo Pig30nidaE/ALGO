@@ -1,0 +1,1 @@
+{"name":"Local: 크로스워드","url":"/Users/idonghag/Documents/ALGO/donghakl/5_week-sort/크로스워드.cpp","tests":[{"id":1687802473164,"input":"4 5\nadaca\nda##b\nabb#b\nabbac","output":"abb"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/idonghag/Documents/ALGO/donghakl/5_week-sort/크로스워드.cpp","group":"local","local":true}
