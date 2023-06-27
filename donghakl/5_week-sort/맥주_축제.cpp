@@ -36,6 +36,30 @@ struct cmp {
   }
 };
 
+void quick_sort(vector <pair <int, int > > *vec, int start, int end)
+{
+	int left = start;
+	int right = end;
+	int pivot = (*vec)[(start + end) / 2].first;
+	
+	while (left <= right)
+	{
+		while (((*vec)[left].first < pivot))
+			left++;
+		while (((*vec)[right].first > pivot))
+			right--;
+		if (left <= right)
+		{
+			swap((*vec)[left], (*vec)[right]);
+			left++;
+			right--;
+		}
+	}
+	if (start < right)
+		quick_sort(vec, start, right);
+	if (left < end)
+		quick_sort(vec, left, end);
+}
 
 int main()
 {
@@ -52,7 +76,8 @@ int main()
 		vec.push_back(make_pair(c, v));
 	}
 
-	sort(vec.begin(), vec.end());
+	// sort(vec.begin(), vec.end());
+	quick_sort(&vec, 0, k - 1);
 
 	 priority_queue<int, vector<int>, cmp> stack;
 
