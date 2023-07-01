@@ -1,20 +1,81 @@
 #include <iostream>
 #include <algorithm>
 
-
-
-
-
-
-
-
-
-
-
-
-/////////// sort()함수 대신 힙정렬을 통해 정렬한 후 돌려보자
-
 using namespace std;
+
+int cmp(int text1, int text2)
+{
+	if (text1 < text2)
+		return 1;
+	else if (text1 > text2)
+		return 2;
+	else
+		return 0;
+}
+
+void makeheap(int *vec, int root, int n)
+{
+	int temp;
+	int temp_fir = vec[root];
+	int child = root * 2;
+	while (child <= n)
+	{
+		if (child < n && cmp(vec[child], vec[child + 1]) == 1)
+			child++;
+		if (cmp(temp_fir, vec[child]) == 1)
+		{
+			swap(vec[child/2], vec[child]);
+			child *= 2;
+		}
+		else
+			break;
+	}
+	vec[child/2] = temp_fir;
+}
+
+void heapsort(int *vec, int n)
+{
+	int temp;
+	for (int i = n/2; i > 0; i--)
+		makeheap(vec, i, n);
+
+	for (int i =n; i > 0; i--)
+	{
+		swap(vec[1], vec[i]);
+		makeheap(vec, 1, i - 1);
+	}
+}
+
+int ft_lower_bound(int target, int left, int right, int *nrr)
+{
+	int mid;
+
+	while (left < right)
+	{
+		mid = (left + right) / 2;
+		if (nrr[mid] < target)
+			left = mid + 1;
+		else
+			right = mid;
+	}
+	return (right);
+}
+
+int ft_upper_bound(int target, int left, int right, int *nrr)
+{
+	int mid;
+
+	while (left < right)
+	{
+		mid = (left + right) / 2;
+		if (nrr[mid] <= target)
+			left = mid + 1;
+		else
+			right = mid;
+	}
+	return (right);
+}
+
 int ft_binary_search(int target, int left, int right, int *nrr)
 {
 	int mid = (left + right) / 2;
@@ -35,56 +96,36 @@ int ft_binary_search(int target, int left, int right, int *nrr)
 	return (-1);
 }
 
-// int finder(int target, int n, vector <int > nrr)
-// {
-// 	int result;
-// 	int cnt;
-// 	int flag;
-
-// 	cnt = 0;
-// 	result = 1;
-// 	result = ft_binary_search(target, 0, n - 1, nrr);
-// 	if (result != -1)
-// 	{
-// 		cnt += 1;
-// 		for (int i = result - 1; nrr[i] == target; i--)
-// 		{
-// 			cnt += 1;
-// 		}
-// 		for (int i = result + 1; nrr[i] == target; i++)
-// 		{
-// 			cnt += 1;
-// 		}
-// 	}
-// 	printf("%d ", cnt);
-// 	return (0);
-// }
-
 int finder(int target, int n, int *nrr)
 {
-	int result;
-	int cnt;
-	int flag;
+	int lower;
+	int upper;
 
-	cnt = 0;
-	result = ft_binary_search(target, 0, n - 1, nrr);
-	if (result != -1)
-	{
-		if (nrr[0] == nrr[n - 1])
-		{
-			return (n);
-		}
-		cnt += 1;
-		for (int i = result - 1; nrr[i] == target; i--)
-		{
-			cnt += 1;
-		}
-		for (int i = result + 1; nrr[i] == target; i++)
-		{
-			cnt += 1;
-		}
-	}
-	return (cnt);
+	lower = ft_lower_bound(target, 1, n, nrr);
+	upper = ft_upper_bound(target, 1, n, nrr);
+	
+	if (lower == upper)
+		printf("0 ");
+	else
+		printf("%d ", upper - lower);
+	// result = ft_binary_search(target, 1, n - 1, nrr);
+	// if (result != -1)
+	// {
+	// 	if (nrr[0] == nrr[n - 1])
+	// 	{
+	// 		return (n);
+	// 	}
+	// 	cnt += 1;
+	// 	for (int i = result - 1; nrr[i] == target; i--)
+	// 	{
+	// 		cnt += 1;
+	// 	}
+	// 	for (int i = result + 1; nrr[i] == target; i++)
+	// 	{
+	// 		cnt += 1;
+	// 	}
+	// }
+	return (0);
 }
 
 int main()
@@ -94,14 +135,14 @@ int main()
 
 	int n, m, tmp, cnt = 0, j;
 	cin >> n;
-	int *nrr = new int[n];
+	int *nrr = new int[n + 1]();
 
-	for (int i = 0; i < n; i++)
+	for (int i = 1; i < n + 1; i++)
 	{
 		cin >> nrr[i];
 	}
 
-	sort(nrr, nrr + n);
+	heapsort(nrr, n);
 
 	int result;
 	int res;
@@ -109,7 +150,7 @@ int main()
 	for (int i = 0; i < m; i++)
 	{
 		cin >> result;
-		printf("%d ", finder(result, n, nrr));
+		finder(result, n + 1, nrr);
+		// printf("%d ", finder(result, n + 1, nrr));
 	}
-	printf("\n");
 }
