@@ -66,6 +66,7 @@
         "typeinfo": "cpp",
         "stdio.h": "c",
         "map": "cpp",
-        "__tree": "cpp"
+        "__tree": "cpp",
+        "set": "cpp"
     }
 }
