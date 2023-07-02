@@ -7,6 +7,8 @@ using namespace std;
 int ft_binary_search(int target, int left, int right, vector <int > nrr)
 {
 	int mid = (left + right) / 2;
+	if (left > right) // 이거 필수
+		return (-1);
 	if (nrr[mid] == target)
 		return mid;
 	else if (nrr[mid] < target)
@@ -20,6 +22,8 @@ int ft_binary_search(int target, vector<int>::iterator left, vector<int>::iterat
     int mid = distance(left, right) / 2;
     vector<int>::iterator midIter = left + mid;
     
+	if (left > right) //이거 필수
+		return (-1);
     if (*midIter == target)
         return (distance(nrr.begin(), midIter));
     else if (*midIter < target)
