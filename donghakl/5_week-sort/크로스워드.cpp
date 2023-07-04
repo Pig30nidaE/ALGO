@@ -74,6 +74,7 @@ int main()
 	int tmp2;
 	vector <string> vec;
 	string word;
+	vec.push_back("NULL");
 	for (int i = 0; i < c; i++)
 	{
 		for (int j = 0; j < r; j++)
@@ -122,7 +123,5 @@ int main()
 	}
 	sort(vec.begin(), vec.end());
 	heapsort(&vec, vec.size() - 1);
-
-
-	cout << vec[0] << "\n";
+	cout << vec[1] << "\n";
 }
