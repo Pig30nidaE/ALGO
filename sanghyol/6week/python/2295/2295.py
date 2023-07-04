@@ -13,8 +13,8 @@ def main()->None:
     num_list = list()
     for _ in range(n):
         num_list.append(int(input()))
-    num_list.sort(reverse=True)
-    max_num = num_list[0]
+    num_list.sort()
+    max_num = num_list[-1]
     left_list = num_list[:n//2]
     right_list = num_list[n//2:]
     num_list = set(num_list)
@@ -35,7 +35,7 @@ def main()->None:
     answer_list.append(get_result(right_comb, left_list, num_list))
     answer_list.append(get_result(left_comb, right_list, num_list))
     answer_list.append(get_result(left_comb, left_list, num_list))
-    print(answer_list)
+    # print(answer_list)
     print(max(answer_list))
 
 if __name__ == '__main__':

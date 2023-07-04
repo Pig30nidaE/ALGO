@@ -4,4 +4,4 @@ n = int(input())
 print(n)
 for _ in range(n):
     #print(_ + 1)
-    print(randint(1, 10))
+    print(randint(1, 10000))
