@@ -11,19 +11,46 @@ int main()
 	int n;
 	cin >> n;
 
-	int all = ((2 + (n -1 -1) * 1) * (n - 1)) / 2;
-	vector <int > arr[all];
-	for (int i = 1; i < n; i++)
+	int value;
+	int **arr = new int* [n];
+	for (int i = 0; i < n; i++)
 	{
-		if (i % 3 == 0)
-		{
-			arr[i] = 1;
-		}
-	 	else if (i)
-		{
-
-		}
-		else if (i)
+		arr[i] = new int [n + 1];
 	}
-	cout << n;
+
+	int res = 0;
+	for (int i = 0; i < n; i++)
+	{
+		if (i == 0)
+		{
+			cin >> value;
+			arr[i][0] = value;
+			res = max(res, arr[i][0]); // 이부분에 대해서 생각 안했었음
+			// printf("%d\n", arr[i][0]);
+		}
+		else
+		{
+			for (int j = 0; j <= i; j++)
+			{
+				cin >> value;
+				if (j == 0)
+				{
+					arr[i][j] = arr[i - 1][j] + value;
+				}
+				else if (j > 0 && j != i)
+				{
+					arr[i][j] = value + max(arr[i - 1][j - 1], arr[i - 1][j]);
+				}
+				else if (j == i)
+				{
+					arr[i][j] = value + arr[i - 1][j - 1];
+				}
+				// printf("%d ", arr[i][j]);
+				if (res < arr[i][j])
+					res = arr[i][j];
+			}
+			// printf("\n");
+		}
+	}
+	cout << res << "\n";
 }
